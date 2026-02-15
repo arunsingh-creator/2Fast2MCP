@@ -1,0 +1,51 @@
+{
+    "role": "engineering",
+    "description": "Onboarding workflow for engineering roles",
+    "tasks": [
+        {
+            "name": "Invite to GitHub org",
+            "description": "Invite the new hire to the company GitHub organization",
+            "category": "github"
+        },
+        {
+            "name": "Grant repo access",
+            "description": "Grant access to relevant repositories",
+            "category": "github"
+        },
+        {
+            "name": "Create setup issue",
+            "description": "Create a dev environment setup issue with checklist",
+            "category": "github"
+        },
+        {
+            "name": "Share engineering docs",
+            "description": "Share engineering handbook and architecture documentation",
+            "category": "gdrive"
+        },
+        {
+            "name": "Set up dev environment",
+            "description": "Install required tools, clone repos, and configure local environment",
+            "category": "general"
+        },
+        {
+            "name": "Complete security training",
+            "description": "Complete the mandatory engineering security training module",
+            "category": "general"
+        }
+    ],
+    "channels": [
+        "#engineering",
+        "#standup",
+        "#deployments"
+    ],
+    "docs": [
+        "engineering-handbook",
+        "architecture-docs"
+    ],
+    "repos": [
+        "main-app",
+        "api-service",
+        "shared-libs",
+        "infrastructure"
+    ]
+}

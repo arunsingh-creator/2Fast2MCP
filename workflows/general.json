@@ -1,0 +1,59 @@
+{
+    "role": "general",
+    "description": "Common onboarding tasks for all new hires",
+    "tasks": [
+        {
+            "name": "Send welcome DM",
+            "description": "Send a personalized welcome message via Slack",
+            "category": "slack"
+        },
+        {
+            "name": "Add to team channels",
+            "description": "Add to #general, #random, #announcements, #onboarding",
+            "category": "slack"
+        },
+        {
+            "name": "Post intro in #general",
+            "description": "Post a welcome introduction for the team",
+            "category": "slack"
+        },
+        {
+            "name": "Share documents",
+            "description": "Share company handbook, HR docs, benefits info",
+            "category": "gdrive"
+        },
+        {
+            "name": "Create personal folder",
+            "description": "Create a personal Google Drive folder for onboarding materials",
+            "category": "gdrive"
+        },
+        {
+            "name": "Complete HR paperwork",
+            "description": "Fill out tax forms, emergency contacts, and agreements",
+            "category": "general"
+        },
+        {
+            "name": "Set up 2FA",
+            "description": "Enable two-factor authentication on all company accounts",
+            "category": "general"
+        },
+        {
+            "name": "Meet with manager",
+            "description": "Schedule and complete an introductory 1:1 with your manager",
+            "category": "general"
+        }
+    ],
+    "channels": [
+        "#general",
+        "#random",
+        "#announcements",
+        "#onboarding"
+    ],
+    "docs": [
+        "company-handbook",
+        "hr-documents",
+        "benefits-info",
+        "team-directory",
+        "onboarding-checklist"
+    ]
+}

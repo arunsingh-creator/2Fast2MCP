@@ -1,0 +1,35 @@
+{
+    "role": "design",
+    "description": "Onboarding workflow for design roles",
+    "tasks": [
+        {
+            "name": "Share brand guidelines",
+            "description": "Share brand guidelines, design system, and asset library",
+            "category": "gdrive"
+        },
+        {
+            "name": "Set up Figma access",
+            "description": "Grant access to team Figma workspace and design files",
+            "category": "general"
+        },
+        {
+            "name": "Review design system",
+            "description": "Walk through the existing component library and design tokens",
+            "category": "general"
+        },
+        {
+            "name": "Meet with design lead",
+            "description": "Schedule intro session with the design team lead",
+            "category": "general"
+        }
+    ],
+    "channels": [
+        "#design",
+        "#design-reviews",
+        "#product"
+    ],
+    "docs": [
+        "brand-guidelines"
+    ],
+    "repos": []
+}
