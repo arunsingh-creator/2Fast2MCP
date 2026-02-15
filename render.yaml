@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: onboardai
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerCommand: python server.py api
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: GITHUB_TOKEN
+        sync: false
+      - key: SLACK_BOT_TOKEN
+        sync: false
+      - key: GDRIVE_SERVICE_ACCOUNT_KEY
+        sync: false
