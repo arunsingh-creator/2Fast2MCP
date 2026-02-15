@@ -6,7 +6,7 @@
  */
 
 // ── Config ──────────────────────────────────────────────
-const API_BASE = "http://localhost:8080";
+const API_BASE = ""; // Relative — works on localhost and Railway
 const POLL_INTERVAL = 10000; // Refresh every 10s
 
 // ── State ───────────────────────────────────────────────

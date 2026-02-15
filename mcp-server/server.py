@@ -423,8 +423,9 @@ def _list_all_impl() -> dict:
 
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse
-from starlette.routing import Route
+from starlette.routing import Route, Mount
 from starlette.middleware.cors import CORSMiddleware
+from starlette.staticfiles import StaticFiles
 
 
 async def api_employees(request):
@@ -444,13 +445,20 @@ async def api_onboard(request):
     return JSONResponse(data)
 
 
-dashboard_app = Starlette(
-    routes=[
-        Route("/api/employees", api_employees),
-        Route("/api/employees/{employee_id}", api_employee_status),
-        Route("/api/onboard", api_onboard, methods=["POST"]),
-    ],
-)
+# Dashboard static files path
+DASHBOARD_DIR = Path(__file__).parent.parent / "dashboard"
+
+routes = [
+    Route("/api/employees", api_employees),
+    Route("/api/employees/{employee_id}", api_employee_status),
+    Route("/api/onboard", api_onboard, methods=["POST"]),
+]
+
+# Mount dashboard static files if the directory exists
+if DASHBOARD_DIR.exists():
+    routes.append(Mount("/", app=StaticFiles(directory=str(DASHBOARD_DIR), html=True)))
+
+dashboard_app = Starlette(routes=routes)
 dashboard_app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -466,16 +474,19 @@ if __name__ == "__main__":
     import uvicorn
 
     mode = sys.argv[1] if len(sys.argv) > 1 else "mcp"
+    port = int(os.getenv("PORT", "8080"))
 
     if mode == "api":
-        # Run REST API for dashboard
-        logger.info("🌐 Starting REST API server on port 8080")
-        uvicorn.run(dashboard_app, host="0.0.0.0", port=8080)
+        # Run REST API + Dashboard (used in Docker and Railway)
+        logger.info(f"🌐 Starting API + Dashboard server on port {port}")
+        uvicorn.run(dashboard_app, host="0.0.0.0", port=port)
     elif mode == "sse":
         # Run as MCP server with Streamable HTTP transport (for Archestra Remote MCP)
-        logger.info("🤖 Starting Onboarding MCP Server (Streamable HTTP on port 8000)")
-        mcp.run(transport="streamable-http", host="0.0.0.0", port=8000)
+        mcp_port = int(os.getenv("MCP_PORT", "8000"))
+        logger.info(f"🤖 Starting Onboarding MCP Server (Streamable HTTP on port {mcp_port})")
+        mcp.run(transport="streamable-http", host="0.0.0.0", port=mcp_port)
     else:
         # Run as MCP server with stdio (default)
         logger.info("🤖 Starting Onboarding MCP Server (stdio)")
         mcp.run(transport="stdio")
+

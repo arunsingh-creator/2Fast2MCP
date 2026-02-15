@@ -7,11 +7,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY mcp-server/ ./mcp-server/
 COPY workflows/ ./workflows/
+COPY dashboard/ ./dashboard/
 
 WORKDIR /app/mcp-server
 
 EXPOSE 8080
 
-# Default: run as MCP server (stdio transport)
-# Override with CMD ["python", "server.py", "api"] to run REST API
-CMD ["python", "server.py"]
+# Run REST API + Dashboard server
+CMD ["python", "server.py", "api"]
