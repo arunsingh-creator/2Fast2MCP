@@ -42,9 +42,28 @@ logger = logging.getLogger("onboard.server")
 WORKFLOWS_DIR = Path(__file__).parent.parent / "workflows"
 
 
+def _normalize_role(role: str) -> str:
+    """Map job titles to workflow file names."""
+    role_lower = role.lower().strip()
+    # Direct match
+    if role_lower in ("engineering", "design", "general"):
+        return role_lower
+    # Common job title mappings
+    engineering_keywords = ["engineer", "developer", "sre", "devops", "backend", "frontend", "fullstack", "swe"]
+    design_keywords = ["design", "ux", "ui", "graphic", "illustrat"]
+    for kw in engineering_keywords:
+        if kw in role_lower:
+            return "engineering"
+    for kw in design_keywords:
+        if kw in role_lower:
+            return "design"
+    return "general"
+
+
 def _load_workflow(role: str) -> dict:
     """Load a workflow template by role, falling back to 'general'."""
-    for name in [role.lower(), "general"]:
+    normalized = _normalize_role(role)
+    for name in [normalized, "general"]:
         path = WORKFLOWS_DIR / f"{name}.json"
         if path.exists():
             return json.loads(path.read_text())
@@ -53,11 +72,25 @@ def _load_workflow(role: str) -> dict:
 
 def _merge_workflows(role: str) -> dict:
     """Merge role-specific workflow with the general workflow."""
+    normalized = _normalize_role(role)
     general = _load_workflow("general")
-    role_wf = _load_workflow(role) if role.lower() != "general" else {}
+
+    # If the role IS general, no merge needed
+    if normalized == "general":
+        return general
+
+    role_wf = _load_workflow(normalized)
+
+    # Deduplicate tasks by name
+    seen_names = set()
+    merged_tasks = []
+    for t in general.get("tasks", []) + role_wf.get("tasks", []):
+        if t["name"] not in seen_names:
+            seen_names.add(t["name"])
+            merged_tasks.append(t)
 
     return {
-        "tasks": general.get("tasks", []) + role_wf.get("tasks", []),
+        "tasks": merged_tasks,
         "channels": list(set(general.get("channels", []) + role_wf.get("channels", []))),
         "docs": list(set(general.get("docs", []) + role_wf.get("docs", []))),
         "repos": role_wf.get("repos", []),

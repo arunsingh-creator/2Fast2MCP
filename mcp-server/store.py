@@ -20,6 +20,7 @@ class OnboardingStore:
         self._persist_path = persist_path or os.getenv(
             "ONBOARD_DATA_PATH", "data/onboarding.json"
         )
+        self._last_mtime: float = 0  # Track file modification time
         self._load()
 
     # ── Employee Management ──────────────────────────────────────────
@@ -31,9 +32,11 @@ class OnboardingStore:
         return employee
 
     def get_employee(self, employee_id: str) -> Optional[Employee]:
+        self._reload()
         return self._employees.get(employee_id)
 
     def list_employees(self) -> list[Employee]:
+        self._reload()
         return list(self._employees.values())
 
     # ── Task Management ──────────────────────────────────────────────
@@ -78,9 +81,11 @@ class OnboardingStore:
     # ── Status ───────────────────────────────────────────────────────
 
     def get_status(self, employee_id: str) -> Optional[OnboardingStatus]:
+        self._reload()
         return self._statuses.get(employee_id)
 
     def get_all_statuses(self) -> list[OnboardingStatus]:
+        self._reload()
         return list(self._statuses.values())
 
     # ── Persistence ──────────────────────────────────────────────────
@@ -101,6 +106,7 @@ class OnboardingStore:
         try:
             path = Path(self._persist_path)
             if path.exists():
+                self._last_mtime = path.stat().st_mtime
                 data = json.loads(path.read_text())
                 for eid, status_data in data.items():
                     status = OnboardingStatus(**status_data)
@@ -108,6 +114,17 @@ class OnboardingStore:
                     self._employees[eid] = status.employee
         except Exception:
             pass  # Start fresh
+
+    def _reload(self):
+        """Reload from disk if the file was modified by another process."""
+        try:
+            path = Path(self._persist_path)
+            if path.exists() and path.stat().st_mtime > self._last_mtime:
+                self._employees.clear()
+                self._statuses.clear()
+                self._load()
+        except Exception:
+            pass
 
 
 # Singleton instance
