@@ -3,7 +3,9 @@
    ═══════════════════════════════════════════════════════════ */
 
 /* ── Reset & Base ──────────────────────────────────────── */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -28,9 +30,9 @@
     --accent-pink: #FD79A8;
     --gradient-primary: linear-gradient(135deg, #6C5CE7 0%, #a29bfe 100%);
     --gradient-success: linear-gradient(135deg, #00B894 0%, #55efc4 100%);
-    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
-    --shadow-md: 0 8px 32px rgba(0,0,0,0.4);
-    --shadow-lg: 0 16px 64px rgba(0,0,0,0.5);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.5);
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
@@ -96,9 +98,19 @@ body {
 }
 
 @keyframes orbFloat {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(30px, -30px) scale(1.05); }
-    66% { transform: translate(-20px, 20px) scale(0.95); }
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    33% {
+        transform: translate(30px, -30px) scale(1.05);
+    }
+
+    66% {
+        transform: translate(-20px, 20px) scale(0.95);
+    }
 }
 
 /* ── App Container ────────────────────────────────── */
@@ -120,8 +132,17 @@ body {
     border-bottom: 1px solid var(--border);
 }
 
-.header-left { display: flex; align-items: center; gap: 16px; }
-.header-right { display: flex; align-items: center; gap: 12px; }
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
 
 .logo {
     display: flex;
@@ -198,7 +219,10 @@ body {
     border-color: var(--border-hover);
 }
 
-.btn-lg { padding: 12px 24px; font-size: 0.93rem; }
+.btn-lg {
+    padding: 12px 24px;
+    font-size: 0.93rem;
+}
 
 /* ── Stats Bar ────────────────────────────────────── */
 .stats-bar {
@@ -317,6 +341,7 @@ body {
     background: conic-gradient(var(--accent-purple), var(--accent-blue), var(--accent-pink), var(--accent-purple)) border-box;
     -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
     opacity: 0.6;
 }
@@ -478,10 +503,15 @@ body {
     animation: taskSlide 0.3s ease both;
 }
 
-.task-item:last-child { border-bottom: none; }
+.task-item:last-child {
+    border-bottom: none;
+}
 
 @keyframes taskSlide {
-    from { opacity: 0; transform: translateX(-10px); }
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
 }
 
 .task-icon {
@@ -520,7 +550,10 @@ body {
     flex: 1;
 }
 
-.task-name.completed { color: var(--text-muted); text-decoration: line-through; }
+.task-name.completed {
+    color: var(--text-muted);
+    text-decoration: line-through;
+}
 
 .task-category {
     font-size: 0.65rem;
@@ -531,10 +564,25 @@ body {
     letter-spacing: 0.3px;
 }
 
-.task-category.github { background: rgba(110,84,148,0.2); color: #b794f6; }
-.task-category.slack { background: rgba(78,133,55,0.2); color: #8fcb81; }
-.task-category.gdrive { background: rgba(66,133,244,0.2); color: #74b9ff; }
-.task-category.general { background: rgba(150,150,150,0.15); color: #a0a0b0; }
+.task-category.github {
+    background: rgba(110, 84, 148, 0.2);
+    color: #b794f6;
+}
+
+.task-category.slack {
+    background: rgba(78, 133, 55, 0.2);
+    color: #8fcb81;
+}
+
+.task-category.gdrive {
+    background: rgba(66, 133, 244, 0.2);
+    color: #74b9ff;
+}
+
+.task-category.general {
+    background: rgba(150, 150, 150, 0.15);
+    color: #a0a0b0;
+}
 
 /* ── Empty State ──────────────────────────────── */
 .empty-state {
@@ -547,7 +595,9 @@ body {
     color: var(--text-muted);
 }
 
-.empty-state.visible { display: flex; }
+.empty-state.visible {
+    display: flex;
+}
 
 .empty-icon {
     width: 100px;
@@ -732,48 +782,82 @@ body {
     backdrop-filter: blur(20px);
 }
 
-.toast.success { border-left: 3px solid var(--accent-green); }
-.toast.error { border-left: 3px solid var(--accent-red); }
-.toast.info { border-left: 3px solid var(--accent-blue); }
+.toast.success {
+    border-left: 3px solid var(--accent-green);
+}
+
+.toast.error {
+    border-left: 3px solid var(--accent-red);
+}
+
+.toast.info {
+    border-left: 3px solid var(--accent-blue);
+}
 
 .toast-leaving {
     animation: toastOut 0.3s ease forwards;
 }
 
 @keyframes toastIn {
-    from { opacity: 0; transform: translateX(40px) scale(0.95); }
+    from {
+        opacity: 0;
+        transform: translateX(40px) scale(0.95);
+    }
 }
 
 @keyframes toastOut {
-    to { opacity: 0; transform: translateX(40px) scale(0.95); }
+    to {
+        opacity: 0;
+        transform: translateX(40px) scale(0.95);
+    }
 }
 
 /* ── Shimmer Loading ──────────────────────────── */
 .shimmer {
-    background: linear-gradient(
-        90deg,
-        var(--bg-card) 25%,
-        var(--bg-card-hover) 50%,
-        var(--bg-card) 75%
-    );
+    background: linear-gradient(90deg,
+            var(--bg-card) 25%,
+            var(--bg-card-hover) 50%,
+            var(--bg-card) 75%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
 }
 
 @keyframes shimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
 }
 
 /* ── Responsive ───────────────────────────────── */
 @media (max-width: 768px) {
-    .app { padding: 16px; }
-    .stats-bar { grid-template-columns: repeat(2, 1fr); }
-    .main-grid { grid-template-columns: 1fr; }
-    .header { flex-direction: column; gap: 16px; }
-    .form-row { grid-template-columns: 1fr; }
+    .app {
+        padding: 16px;
+    }
+
+    .stats-bar {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 480px) {
-    .stats-bar { grid-template-columns: 1fr; }
+    .stats-bar {
+        grid-template-columns: 1fr;
+    }
 }
